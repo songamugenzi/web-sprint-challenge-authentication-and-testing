@@ -22,32 +22,29 @@ describe("server.js", () => {
 
       const res = await request(server)
         .post("/api/auth/register")
-        .send(testUser)
-        .expect(res.status)
-        .toBe(201);
+        .send(testUser);
+      expect(res.status).toBe(201);
     });
 
     it("should return 500 status code with invalid user", async () => {
-        const res = await request(server)
+      const res = await request(server)
         .post("/api/auth/register")
-        .send({ user: "tester", pass: "tester" })
-        expect(res.status).toBe(500);
-    })
+        .send({ user: "tester", pass: "tester" });
+      expect(res.status).toBe(500);
+    });
   });
 
   describe("login with user", () => {
-      it("should return 200 status code with test user", async () => {
-        const res = await request(server)
-        .post("/api/auth/login")
-        .send(testUser)
-        .expect(res.status).toBe(200)
-      })
+    it("should return 200 status code with test user", async () => {
+      const res = await request(server).post("/api/auth/login").send(testUser);
+      expect(res.status).toBe(200);
+    });
 
-      it("should return 401 status code with non-valid user", async () => {
-        const res = await request(server)
+    it("should return 401 status code with non-valid user", async () => {
+      const res = await request(server)
         .post("/api/auth/login")
-        .send({ username: "does not exist", password: "does not exist" })
-        .expect(res.status).toBe(401)
-      })
-  })
+        .send({ username: "does not exist", password: "does not exist" });
+      expect(res.status).toBe(401);
+    });
+  });
 });
